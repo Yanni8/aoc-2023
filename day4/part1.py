@@ -1,4 +1,16 @@
-points = 0
+total_points = 0
+
+def get_points(wining, have) -> int:
+    points = 0
+    for num in have:
+        if num == "":
+            continue
+        if num in wining:
+            if points == 0:
+                points = 1
+            else:
+                points *= 2
+    return points
 
 with open("data.txt") as f:
     for line in f:
@@ -8,16 +20,6 @@ with open("data.txt") as f:
         wining = wining.strip().split(" ")
         have = have.strip().split(" ")
 
-        current_points = 0
-        for num in have:
-            if num == "":
-                continue
-            if num in wining:
-                print("Num: ", num)
-                if current_points == 0:
-                    current_points = 1
-                else:
-                    current_points *= 2
-        points += current_points
+        total_points += get_points(wining, have)
 
-print(points)
+print(f"Solution of Part 1 Day 4: {total_points}")
