@@ -1,15 +1,5 @@
 import numpy as np
 
-
-index = 0
-
-def to_index(x):
-    global index
-    if x == 1:
-        index += 1
-        return index
-    return 0
-
 with open("data.txt") as f:
     data = np.array([[0 if char == "." else 1 for char in line.strip()] for line in f])
 
@@ -19,17 +9,7 @@ zero_cols = np.where(~data.any(axis=0))[0]
 data = np.insert(data, zero_rows, 0, axis=0)
 data = np.insert(data, zero_cols, 0, axis=1)
 
-data = np.asmatrix(data)
-
-data = np.vectorize(to_index)(data)
-
-
-indexes = set()
-
-for idx in range(1, index + 1):
-    i, j = np.where(data == idx)
-    indexes.add((i[0], j[0]))   
-
+indexes = np.array(np.where(data == 1)).T
 
 summe = 0
 
